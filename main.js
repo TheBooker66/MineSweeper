@@ -30,7 +30,7 @@ function BuildBoard() {
 	document.getElementById("board").border = "1";
 	//add right click listener
 	idInTable = 0;
-	for (var x = 0; x < rows; x++) {
+	for (var x = 0; x < rows; x++) { 
 		for (var y = 0; y < cols; y++) {
 			document.getElementById(idInTable).addEventListener('contextmenu', function (e) {
 				e.preventDefault();

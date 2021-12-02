@@ -54,9 +54,9 @@ function BuildBoard() {
 				}
 				if (mineNum === 0) {
 					alert("You Won!");
-					document.getElementById("Images\win").src = "win.jpg";
-					document.getElementById("Images\win").width = "900";
-					document.getElementById("Images\win").height = "500";
+					document.getElementById("Images\win.jpg").src = "win.jpg";
+					document.getElementById("Images\win.jpg").width = "900";
+					document.getElementById("Images\win/jpg").height = "500";
 				}
 				return false;
 			}, false);

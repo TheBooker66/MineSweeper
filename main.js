@@ -1,9 +1,11 @@
-var allNum, rows, cols, mineNum, clickID, rowClickedOn, colClickedOn, boardSize, clickcounter = 0;
+// noinspection ES6ConvertVarToLetConst,HtmlRequiredAltAttribute
+
+var allNum, rows, cols, mineNum, clickID, rowClickedOn, colClickedOn, boardSize, clickCounter = 0;
 
 function BuildBoard() {
 	var idInTable = 0, boardText = "";
 	rows = prompt("Enter the number of Rows (please don't enter a number over 100 or lower than 4):");
-	cols = prompt("Enter the number of collums (please don't enter a number over 100 or lower than 4):");
+	cols = prompt("Enter the number of columns (please don't enter a number over 100 or lower than 4):");
 	if (screen.width > screen.height)
 		boardSize = Math.floor(screen.width / rows / 3);
 	else
@@ -19,7 +21,7 @@ function BuildBoard() {
 	for (var x = 0; x < rows; x++) {
 		boardText = boardText + " <tr>";
 		for (var y = 0; y < cols; y++) {
-			boardText = boardText + "<td id='" + idInTable + "' onclick='tdPress(this);' class='canBeClickedOn'> <img src='unclicked.png' width='" + boardSize + "' height='" + boardSize + "' /> </td>";
+			boardText = boardText + "<td id='" + idInTable + "' onclick='tdPress(this);' class='canBeClickedOn'> <img src='Images/unclicked.png' width='" + boardSize + "' height='" + boardSize + "' /> </td>";
 			idInTable++;
 		}
 		boardText = boardText + " </tr>";
@@ -37,20 +39,20 @@ function BuildBoard() {
 				colClickedOn = clickID % rows;
 				if (allNum[rowClickedOn][colClickedOn] >= 29) {
 					allNum[rowClickedOn][colClickedOn] -= 29; //cause flag in geometry
-					this.innerHTML = "<img src='unclicked.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-					if (allNum[rowClickedOn][colClickedOn] == 9)
+					this.innerHTML = "<img src='Images/unclicked.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+					if (allNum[rowClickedOn][colClickedOn] === 9)
 						mineNum++;
 				}
 				else if (allNum[rowClickedOn][colClickedOn] <= 9) {
 					//var imageCheck = document.getElementById(clickID).innerHTML;
 					//if (imageCheck == ' <img src="unclicked.png" width="51" height="51"> ') {
 						allNum[rowClickedOn][colClickedOn] += 29; //cause flag in geometry
-						this.innerHTML = "<img src='flag.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-						if (allNum[rowClickedOn][colClickedOn] == 38) //29 + 9
+						this.innerHTML = "<img src='Images/flag.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+						if (allNum[rowClickedOn][colClickedOn] === 38) //29 + 9
 							mineNum--;
 					//}
 				}
-				if (mineNum == 0) {
+				if (mineNum === 0) {
 					alert("You Won!");
 					document.getElementById("winImage").src = "win.jpg";
 					document.getElementById("winImage").width = "900";
@@ -68,13 +70,13 @@ function tdPress(currentThis) {
 	rowClickedOn = Math.floor(clickID / rows);
 	colClickedOn = clickID % rows;
 
-	if (clickcounter == 0) {
+	if (clickCounter === 0) {
 		mineNum = Math.floor(rows * cols * 0.15);  //number of mines
 		var tempNumMine = mineNum;
 		while (tempNumMine > 0) {
 			var mineRow = Math.floor(Math.random() * allNum[0].length); //equals to rows - 1
 			var mineCol = Math.floor(Math.random() * allNum[1].length); //equals to cols - 1
-			if (allNum[mineRow][mineCol] == 0 && mineRow != rowClickedOn && mineCol != colClickedOn) {
+			if (allNum[mineRow][mineCol] === 0 && mineRow !== rowClickedOn && mineCol !== colClickedOn) {
 				allNum[mineRow][mineCol] = 9;
 				if (mineRow + 1 < allNum[0].length)
 					allNum[mineRow + 1][mineCol] = allNum[mineRow + 1][mineCol] + 1;
@@ -95,19 +97,19 @@ function tdPress(currentThis) {
 				tempNumMine--;
 			}
 		}
-		clickcounter++;
+		clickCounter++;
 	}
 
-	if (allNum[rowClickedOn][colClickedOn] == 9) {
+	if (allNum[rowClickedOn][colClickedOn] === 9) {
 		for (var x = 0; x < rows; x++) {
 			for (var y = 0; y < cols; y++) {
-				if (allNum[x][y] == 9) {
+				if (allNum[x][y] === 9) {
 					clickID = x * rows + y;
-					document.getElementById(clickID).innerHTML = "<img src='mine.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+					document.getElementById(clickID).innerHTML = "<img src='Images/mine.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 				}
 			}
 		}
-		currentThis.innerHTML = "<img src='openedmine.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+		currentThis.innerHTML = "<img src='Images/openedmine.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 		alert("You Lost!");
 		document.getElementById("loseImage").src = "lose.jpg";
 		document.getElementById("loseImage").width = "900";
@@ -118,10 +120,10 @@ function tdPress(currentThis) {
 }
 
 function CheckForZeros(row, col) {
-	SwitchtheBoard(row, col);
+	SwitchTheBoard(row, col);
 	//if (allNum[row][col] < 10)
 	//	allNum[row][col] += 10;
-	if (allNum[row][col] == 0) {
+	if (allNum[row][col] === 0) {
 		allNum[row][col] += 10;
 		if (row + 1 < allNum[0].length) {
 			CheckForZeros(row + 1, col);
@@ -150,38 +152,38 @@ function CheckForZeros(row, col) {
 	}
 }
 
-function SwitchtheBoard(row, col) {
+function SwitchTheBoard(row, col) {
 	clickID = row * rows + col;
 	switch (allNum[row][col]) {
 		case 1 || 11:
-			document.getElementById(clickID).innerHTML = "<img src='t1.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t1.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		case 2 || 12:
-			document.getElementById(clickID).innerHTML = "<img src='t2.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t2.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		case 3 || 13:
-			document.getElementById(clickID).innerHTML = "<img src='t3.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t3.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		case 4 || 14:
-			document.getElementById(clickID).innerHTML = "<img src='t4.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t4.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		case 5 || 15:
-			document.getElementById(clickID).innerHTML = "<img src='t5.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t5.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		case 6 || 16:
-			document.getElementById(clickID).innerHTML = "<img src='t6.png' width='" + boardSize + "' height=' " + boardSize + "'/>"
+			document.getElementById(clickID).innerHTML = "<img src='Images/t6.png' width='" + boardSize + "' height=' " + boardSize + "'/>"
 			break;
 		case 7 || 17:
-			document.getElementById(clickID).innerHTML = "<img src='t7.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t7.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		case 8 || 18:
-			document.getElementById(clickID).innerHTML = "<img src='t8.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t8.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 			break;
 		default:
-			document.getElementById(clickID).innerHTML = "<img src='t0.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+			document.getElementById(clickID).innerHTML = "<img src='Images/t0.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 	}
 	if (allNum[row][col] > 29)
-		document.getElementById(clickID).innerHTML = "<img src='flag.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+		document.getElementById(clickID).innerHTML = "<img src='Images/flag.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 }
 
 function EndOfGame() {
@@ -192,5 +194,5 @@ function EndOfGame() {
 	document.getElementById("loseImage").width = "1";
 	document.getElementById("loseImage").height = "1";
 	BuildBoard();
-	clickcounter = 0;
+	clickCounter = 0;
 }

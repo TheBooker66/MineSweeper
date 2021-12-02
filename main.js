@@ -54,7 +54,7 @@ function BuildBoard() {
 				}
 				if (mineNum === 0) {
 					alert("You Won!");
-					document.getElementById("winImage").src = "Images\win.jpg";
+					document.getElementById("winImage").src = "Images/win.jpg";
 					document.getElementById("winImage").width = "900";
 					document.getElementById("winImage").height = "500";
 				}
@@ -111,7 +111,7 @@ function tdPress(currentThis) {
 		}
 		currentThis.innerHTML = "<img src='Images/openedmine.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
 		alert("You Lost!");
-		document.getElementById("loseImage").src = "lose.jpg";
+		document.getElementById("loseImage").src = "Images/lose.jpg";
 		document.getElementById("loseImage").width = "900";
 		document.getElementById("loseImage").height = "500";
 	}
